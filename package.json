@@ -1,5 +1,5 @@
 {
-  "name": "blog",
+  "name": "app.js",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -16,5 +16,14 @@
   "main": "app.js",
   "author": "",
   "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nourhen12/atelier-blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nourhen12/atelier-blog/issues"
+  },
+  "homepage": "https://github.com/nourhen12/atelier-blog#readme",
   "description": ""
 }

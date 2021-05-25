@@ -1,6 +1,6 @@
  const router=require('express').Router();
 const  productService= require('../services/product.service')();
-
+const  categoryService= require('../services/category.service')();
 
  router.get('/',async function(req,res){
     let result=await productService.getAllProducts();

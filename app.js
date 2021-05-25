@@ -9,6 +9,8 @@ const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productRouter =require('./routes/products');
+const commandRouter =require('./routes/command');
+const categoryRouter =require('./routes/category');
 
 mongoose.connect('mongodb://localhost:27017/myapp-api', 
 {useNewUrlParser: true, useUnifiedTopology: true})
@@ -26,6 +28,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productRouter);
+app.use('/command', commandRouter); 
+app.use('/category', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

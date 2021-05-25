@@ -12,6 +12,7 @@ async function addProduct(_product) {
 }
 
 async function getAllProducts() {
+
     try {
         let products = await Product.find();
         let message = { items: products, total: products.legth }
@@ -21,6 +22,7 @@ async function getAllProducts() {
         return ({ message: "Get All Productns Fail", payload: error });
     }
 }
+
 
 async function getOneProduct(id){
   
