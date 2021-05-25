@@ -1,9 +1,12 @@
 const Product = require('../models/product-schema');
+const Category = require('../models/category-schema');
 
 async function addProduct(_product) {
     try {
-        let result = await Product.create(_product);
-       return ({ message: "Product added succssfullty", payload: result });
+        let newProduct = await Product.create(_product);
+        await Category.updateMany({ '_id': newProduct.categories }, { $push: { products: newProduct._id } });
+  
+       return ({ message: "Product added succssfullty", payload: newProdrct });
 
     } catch (error) {
         return ({ message: "Add Product failed", payload: error });
@@ -35,6 +38,15 @@ async function getOneProduct(id){
         return ({ message: "Get Product Fail", payload: error });
     }
 }
+
+async function addProductToCategory(ProductId, category) {
+    return Product.findByIdAndUpdate(
+        ProductId,
+      { $push: { categoris: category._id } },
+      { new: true, useFindAndModify: false }
+    );
+  };
+  
 
 async function updateProduct(id,product) {
   
