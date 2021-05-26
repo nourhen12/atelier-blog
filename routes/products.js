@@ -21,7 +21,7 @@ const  categoryService= require('../services/category.service')();
 
  })
 
- router.put('/update/:id', async function(req,res)
+ router.put('/:id', async function(req,res)
  { let product=req.body;
    let id_product=req.params.id;
   let response = await productService.updateProduct(id_product,req.body);

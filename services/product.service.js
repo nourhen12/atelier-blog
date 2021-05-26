@@ -6,7 +6,7 @@ async function addProduct(_product) {
         let newProduct = await Product.create(_product);
         await Category.updateMany({ '_id': newProduct.categories }, { $push: { products: newProduct._id } });
   
-       return ({ message: "Product added succssfullty", payload: newProdrct });
+       return ({ message: "Product added succssfullty", payload: newProduct });
 
     } catch (error) {
         return ({ message: "Add Product failed", payload: error });
@@ -17,7 +17,7 @@ async function addProduct(_product) {
 async function getAllProducts() {
 
     try {
-        let products = await Product.find();
+        let products = await Product.find().populate("categories", "-_id -__v -products");
         let message = { items: products, total: products.legth }
         return message;
 
@@ -30,7 +30,7 @@ async function getAllProducts() {
 async function getOneProduct(id){
   
    try {
-        let product = await Product.findById({_id:id});
+        let product = await Product.findById({_id:id}).populate("categories");
         let message = { items: product}
         return message;
 
@@ -39,19 +39,12 @@ async function getOneProduct(id){
     }
 }
 
-async function addProductToCategory(ProductId, category) {
-    return Product.findByIdAndUpdate(
-        ProductId,
-      { $push: { categoris: category._id } },
-      { new: true, useFindAndModify: false }
-    );
-  };
-  
-
 async function updateProduct(id,product) {
   
     try {
         let updatedProduct = await Product.findByIdAndUpdate(id, product);
+        await Category.updateMany({ '_id': updatedProduct.categories }, { $push: { products: updatedProduct._id } });
+  
        return ({ message: "Product updated succssfullty", payload: updatedProduct });
 
     } catch (error) {
@@ -64,6 +57,7 @@ async function DeleteProduct(id) {
   
     try {
         let deletedProduct = await Product.deleteOne({_id:id});
+        await Category.updateMany({ '_id': deletedProduct.categories }, { $pull: { products: deletedProduct._id } });
        return ({ message: `product with _id=${id} has deleted`, payload: deletedProduct });
 
     } catch (error) {

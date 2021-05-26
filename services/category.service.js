@@ -51,7 +51,7 @@ async function getCategoryProducts(id) {
 
 async function getAllCategory() {
     try {
-        let categorys = await Category.find();
+        let categorys = await Category.find().populate("products","-_id -__v -categories");
         let message = { items: categorys, total: categorys.legth }
         return message;
 
@@ -63,7 +63,7 @@ async function getAllCategory() {
 async function getOneCategory(id){
   
    try {
-        let category = await Category.findById({_id:id});
+        let category = await Category.findById({_id:id}).populate("products");
         let message = { items: category}
         return message;
 
